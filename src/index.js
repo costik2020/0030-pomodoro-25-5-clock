@@ -49,6 +49,14 @@ const formatTime = (time) => {
     );
 }
 
+const formatTimeForLengths = (time) => {
+    let minutes = Math.floor(time/60);
+    let seconds = time % 60;
+    return (
+    ( minutes ) 
+    );
+}
+
 
 const changeTime = (amount, type)=>{
     if (type === "break"){
@@ -137,7 +145,7 @@ const controlTime = () => {
             console.log("countFireSetInterval=", countFireSetInterval);
             
             
-
+            if (timerOn === false){ return; }
             displayTimeVariable = displayTimeVariable - 1;
             // If the displayed time is negative and we are not on break 
                     // Then switch the timer to the break intervak 
@@ -211,6 +219,8 @@ const resetTime = () => {
     setDisplayTime(25*60);
     setBreakTime(5*60);
     setSessionTime(25*60);
+    setTimerOn(false);
+    console.log("timerOn=", timerOn);
 }
 
 
@@ -229,25 +239,34 @@ return (
         <div className="dual-container">
 
             <Length 
+                lengthType={"break-label"}
+                lengthUpButtonType={"break-increment"}
+                lengthDownButtonType={"break-decrement"}
+                lengthDurationType={"break-length"}
                 title={"break length"} 
                 changeTime={changeTime} 
                 type={"break"} 
                 time={breakTime} 
-                formatTime={formatTime}
+                formatTimeForLengths={formatTimeForLengths}
             />
 
             <Length 
+                lengthType={"session-label"}
+                lengthUpButtonType={"session-increment"}
+                lengthDownButtonType={"session-decrement"}
+                lengthDurationType={"session-length"}
                 title={"session length"} 
                 changeTime={changeTime} 
                 type={"session"} 
                 time={sessionTime} 
-                formatTime={formatTime}
+                formatTimeForLengths={formatTimeForLengths}
             />
         </div>
         <div>
-            <h3>{onBreak ? "Break":"Session" }</h3>
-            <h1>{formatTime(displayTime)}</h1>
+            <h3 id="timer-label">{onBreak ? "Break":"Session" }</h3>
+            <h1 id="time-left">{formatTime(displayTime)}</h1>
             <button 
+                id="start_stop"
                 className="btn btn-primary btn-lg"
                 onClick={controlTime}
             >
@@ -258,6 +277,7 @@ return (
                 )}
             </button> 
             <button 
+                id="reset"
                 className="btn btn-primary btn-lg"
                 onClick={resetTime}
             >
@@ -271,14 +291,25 @@ return (
 );
 }
 
+    
 
-
-function Length({title, changeTime, type, time, formatTime}){
+function Length(
+    {lengthType, 
+    lengthUpButtonType, 
+    lengthDownButtonType, 
+    lengthDurationType ,
+    title, 
+    changeTime, 
+    type, 
+    time, 
+    formatTimeForLengths}
+){
     return (
         <div>
             <h3>{title}</h3>
-            <div className="time-sets">
+            <div id={`${lengthType}`} className="time-sets">
                 <button 
+                    id={`${lengthDownButtonType}`}
                     className="btn btn-primary"
                     onClick={()=>{
                        return changeTime(-60, type)
@@ -287,8 +318,9 @@ function Length({title, changeTime, type, time, formatTime}){
                 >
                     <i className="bi bi-arrow-down-circle"></i>
                 </button>
-                <h3>{formatTime(time)}</h3>
+                <h3 id={`${lengthDurationType}`}>{formatTimeForLengths(time)}</h3>
                 <button 
+                    id={`${lengthUpButtonType}`}
                     className="btn btn-primary"
                     onClick={()=>{
                        return changeTime(+60, type)
