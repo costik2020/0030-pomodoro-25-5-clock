@@ -25,7 +25,7 @@ const [resetPressed, setResetPressed] = React.useState(false);
 
 const [onBreak, setOnBreak] = React.useState(false);
 const [breakAudio, setBreakAudio] = React.useState( document.getElementById("beep") );
-
+let [filter, setFilter] = React.useState( document.querySelector(".filter-weak") );
 
 
 
@@ -173,6 +173,15 @@ const controlTime = () => {
             //console.log("countFireSetInterval=", countFireSetInterval);
             //console.log("timerOn=", timerOn);
             
+
+            // Each second change the filter color:
+            let redNumber = 0 + Math.floor(Math.random() * 255);		
+            let greenNumber = 0 + Math.floor(Math.random() * 255);	
+            let blueNumber = 0 + Math.floor(Math.random() * 255);	
+           
+            filter.style.setProperty("background", `rgba(${redNumber}, ${greenNumber}, ${blueNumber}, 0.3)`);
+            // console.log("filter=", filter);
+            
             displayTimeVariable = displayTimeVariable - 1;
             // If the displayed time is negative and we are not on break 
                     // Then switch the timer to the break intervak 
@@ -262,6 +271,11 @@ const resetTime = () => {
         setTimerOn(!timerOn);
     }
 
+
+
+    filter.style.setProperty("background", `rgba(255, 255, 255, 0.3)`);
+
+
 }
 
 
@@ -303,12 +317,12 @@ return (
                 formatTimeForLengths={formatTimeForLengths}
             />
         </div>
-        <div>
+        <div className="bottom-timer">
             <h3 id="timer-label">{onBreak ? "Break":"Session" }</h3>
-            <h1 id="time-left">{formatTime(displayTime)}</h1>
+            <h1 id="time-left" className="the-pomodoro-timer">{formatTime(displayTime)}</h1>
             <button 
                 id="start_stop"
-                className="btn btn-primary btn-lg"
+                className="btn btn-success btn-lg"
                 onClick={controlTime}
             >
             {timerOn ? (
@@ -319,7 +333,7 @@ return (
             </button> 
             <button 
                 id="reset"
-                className="btn btn-primary btn-lg"
+                className="btn btn-success btn-lg"
                 onClick={resetTime}
             >
                 <i className="bi bi-arrow-repeat"></i>
@@ -351,7 +365,7 @@ function Length(
             <div id={`${lengthType}`} className="time-sets">
                 <button 
                     id={`${lengthDownButtonType}`}
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     onClick={()=>{
                        return changeTime(-60, type)
                     }}
@@ -362,7 +376,7 @@ function Length(
                 <h3 id={`${lengthDurationType}`}>{formatTimeForLengths(time)}</h3>
                 <button 
                     id={`${lengthUpButtonType}`}
-                    className="btn btn-primary"
+                    className="btn btn-success"
                     onClick={()=>{
                        return changeTime(+60, type)
                     }}
