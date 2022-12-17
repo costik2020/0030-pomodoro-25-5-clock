@@ -16,7 +16,7 @@ import "./style.css";
 
 
 function App() {
-    
+
 const [displayTime, setDisplayTime] = React.useState(25*60);
 const [breakTime, setBreakTime] = React.useState(5*60);
 const [sessionTime, setSessionTime] = React.useState(25*60);
@@ -27,16 +27,18 @@ const [onBreak, setOnBreak] = React.useState(false);
 const [breakAudio, setBreakAudio] = React.useState(new Audio("static-noise.mp3"));
 
 
-/*
-// Testing the bleep 
-const [displayTime, setDisplayTime] = React.useState(6);
-const [breakTime, setBreakTime] = React.useState(2);
-const [sessionTime, setSessionTime] = React.useState(5);
+
+/*    
+// Testing 
+const [displayTime, setDisplayTime] = React.useState(5);
+const [breakTime, setBreakTime] = React.useState(3);
+const [sessionTime, setSessionTime] = React.useState(4);
 const [timerOn, setTimerOn] = React.useState(false);
+const [resetPressed, setResetPressed] = React.useState(false);
+
 const [onBreak, setOnBreak] = React.useState(false);
 const [breakAudio, setBreakAudio] = React.useState(new Audio("static-noise.mp3"));
 */
-
 
 
 
@@ -61,10 +63,10 @@ const formatTimeForLengths = (time) => {
 
 
 const changeTime = (amount, type)=>{
-    console.log("amount=", amount);
-    console.log("type=", type);
+    // console.log("amount=", amount);
+    // console.log("type=", type);
     
-    console.log("sessionTime=", sessionTime);
+    // console.log("sessionTime=", sessionTime);
 
     // I should not be able to set a session or break length to > 60
     if ((type==="break") && (breakTime/60 >= 60)  ){
@@ -152,21 +154,21 @@ const controlTime = () => {
     let displayTimeVariable = displayTime;
 
 
-    console.log("onBreak=", onBreak);
+    // console.log("onBreak=", onBreak);
     let countFireSetInterval = 0;
     if (!timerOn) {
         //setTimerOn(true);
         //console.log("timerOn=", timerOn);
         let interval = setInterval(()=>{
             //if (timerOn === false) { return};
-            console.log("resetPressed=", resetPressed);
+            //console.log("resetPressed=", resetPressed);
 
  //           if (resetPressed === true){ 
  //               setResetPressed(false);
  //               return;
  //           }
             countFireSetInterval += 1;
-            console.log("countFireSetInterval=", countFireSetInterval);
+            //console.log("countFireSetInterval=", countFireSetInterval);
             //console.log("timerOn=", timerOn);
             
             displayTimeVariable = displayTimeVariable - 1;
@@ -175,13 +177,13 @@ const controlTime = () => {
             // If the display time is negative and we are on a break interval 
                     // Then switch the timer to the session interval 
             // Else just update the timmer by substracting 1 second (1000ms) from it 
-            if ((displayTimeVariable <= 0) && (onBreakVariable === false)){
+            if ((displayTimeVariable < 0) && (onBreakVariable === false)){
                 playBreakSound();
                 onBreakVariable = true;
                 setOnBreak(true);
                 displayTimeVariable = breakTime;
                 setDisplayTime(breakTime);
-            } else if ((displayTimeVariable <= 0) && (onBreakVariable === true)){
+            } else if ((displayTimeVariable < 0) && (onBreakVariable === true)){
                 playBreakSound();
                 onBreakVariable = false;
                 setOnBreak(false);
@@ -194,7 +196,7 @@ const controlTime = () => {
 
 
         }, 1000);
-        console.log("touch!!!!!!!!!");
+        // console.log("touch!!!!!!!!!");
 
         localStorage.clear();        
         localStorage.setItem("interval-id", interval);
@@ -244,7 +246,8 @@ const resetTime = () => {
     setBreakTime(5*60);
     setSessionTime(25*60);
     setTimerOn(false);
-    console.log("timerOn=", timerOn);
+    setOnBreak(false);
+    //console.log("timerOn=", timerOn);
     setResetPressed(true);
 
     // Reset the timmer while is counting (aka while the timerOn===true )
