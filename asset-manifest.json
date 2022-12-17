@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/0030-pomodoro-25-5-clock/static/css/main.e30ee208.css",
+    "main.js": "/0030-pomodoro-25-5-clock/static/js/main.dd928872.js",
+    "static/media/tomatoes.jpg": "/0030-pomodoro-25-5-clock/static/media/tomatoes.5ce241b242f3e2107fc4.jpg",
+    "static/media/bootstrap-icons.woff?": "/0030-pomodoro-25-5-clock/static/media/bootstrap-icons.6959d0d983ee318f8880.woff",
+    "static/media/bootstrap-icons.woff2?": "/0030-pomodoro-25-5-clock/static/media/bootstrap-icons.b2e5aab643c6f0fd2da6.woff2",
+    "index.html": "/0030-pomodoro-25-5-clock/index.html",
+    "main.e30ee208.css.map": "/0030-pomodoro-25-5-clock/static/css/main.e30ee208.css.map",
+    "main.dd928872.js.map": "/0030-pomodoro-25-5-clock/static/js/main.dd928872.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e30ee208.css",
+    "static/js/main.dd928872.js"
+  ]
+}
