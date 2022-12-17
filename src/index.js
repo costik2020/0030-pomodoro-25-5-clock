@@ -21,6 +21,8 @@ const [displayTime, setDisplayTime] = React.useState(25*60);
 const [breakTime, setBreakTime] = React.useState(5*60);
 const [sessionTime, setSessionTime] = React.useState(25*60);
 const [timerOn, setTimerOn] = React.useState(false);
+const [resetPressed, setResetPressed] = React.useState(false);
+
 const [onBreak, setOnBreak] = React.useState(false);
 const [breakAudio, setBreakAudio] = React.useState(new Audio("static-noise.mp3"));
 
@@ -139,13 +141,20 @@ const controlTime = () => {
     console.log("onBreak=", onBreak);
     let countFireSetInterval = 0;
     if (!timerOn) {
+        //setTimerOn(true);
+        //console.log("timerOn=", timerOn);
         let interval = setInterval(()=>{
+            //if (timerOn === false) { return};
+            console.log("resetPressed=", resetPressed);
 
+ //           if (resetPressed === true){ 
+ //               setResetPressed(false);
+ //               return;
+ //           }
             countFireSetInterval += 1;
             console.log("countFireSetInterval=", countFireSetInterval);
+            //console.log("timerOn=", timerOn);
             
-            
-            if (timerOn === false){ return; }
             displayTimeVariable = displayTimeVariable - 1;
             // If the displayed time is negative and we are not on break 
                     // Then switch the timer to the break intervak 
@@ -171,6 +180,7 @@ const controlTime = () => {
 
 
         }, 1000);
+        console.log("touch!!!!!!!!!");
 
         localStorage.clear();        
         localStorage.setItem("interval-id", interval);
@@ -221,6 +231,13 @@ const resetTime = () => {
     setSessionTime(25*60);
     setTimerOn(false);
     console.log("timerOn=", timerOn);
+    setResetPressed(true);
+
+    if (timerOn){
+        clearInterval(localStorage.getItem("interval-id"));
+        setTimerOn(!timerOn);
+    }
+
 }
 
 
