@@ -24,7 +24,9 @@ const [timerOn, setTimerOn] = React.useState(false);
 const [resetPressed, setResetPressed] = React.useState(false);
 
 const [onBreak, setOnBreak] = React.useState(false);
-const [breakAudio, setBreakAudio] = React.useState(new Audio("static-noise.mp3"));
+const [breakAudio, setBreakAudio] = React.useState( document.getElementById("beep") );
+
+
 
 
 
@@ -37,7 +39,7 @@ const [timerOn, setTimerOn] = React.useState(false);
 const [resetPressed, setResetPressed] = React.useState(false);
 
 const [onBreak, setOnBreak] = React.useState(false);
-const [breakAudio, setBreakAudio] = React.useState(new Audio("static-noise.mp3"));
+const [breakAudio, setBreakAudio] = React.useState( document.getElementById("beep") );
 */
 
 
@@ -249,6 +251,10 @@ const resetTime = () => {
     setOnBreak(false);
     //console.log("timerOn=", timerOn);
     setResetPressed(true);
+    
+    // Handle audio 
+  breakAudio.pause();
+  breakAudio.currentTime = 0;
 
     // Reset the timmer while is counting (aka while the timerOn===true )
     if (timerOn){
