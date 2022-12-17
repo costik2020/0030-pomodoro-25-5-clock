@@ -61,13 +61,27 @@ const formatTimeForLengths = (time) => {
 
 
 const changeTime = (amount, type)=>{
+    console.log("amount=", amount);
+    console.log("type=", type);
+    
+    console.log("sessionTime=", sessionTime);
+
+    // I should not be able to set a session or break length to > 60
+    if ((type==="break") && (breakTime/60 >= 60)  ){
+        return;
+    } else if ((type==="session") && (sessionTime/60 >= 60)  ){
+        return;
+    }
+    
+
+    // Increment or decrement the Length for a break or session 
     if (type === "break"){
         // Make sure we can not go below 1 into negative teritory
         if (breakTime <= 60 && amount < 0) {
             return;
         }
         setBreakTime((prev)=> prev + amount);
-    } else {
+    } else if (type === "session") {
         // Make sure we can not go below 1 into negative teritory
         if (sessionTime <= 60 && amount < 0) {
             return;
@@ -233,6 +247,7 @@ const resetTime = () => {
     console.log("timerOn=", timerOn);
     setResetPressed(true);
 
+    // Reset the timmer while is counting (aka while the timerOn===true )
     if (timerOn){
         clearInterval(localStorage.getItem("interval-id"));
         setTimerOn(!timerOn);
